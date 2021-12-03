@@ -88,6 +88,7 @@ unsigned char keys = 0; // Initialized to 0 or 0b00000000.
 
 // Texture variables.
 GLuint blankID;
+GLuint platformID;
 GLint width, height, bitDepth;
 
 // Light Variables
@@ -96,7 +97,7 @@ glm::vec3 light_position;
 // Light objects. Now OOP.
 AmbientLight aLight(
 	glm::vec3(1.0f, 1.0f, 1.0f),
-	0.1f);
+	1.0f);
 
 PointLight pLight(
 	glm::vec3(5.0f, 1.0f, -4.0f),	// Position.
@@ -114,7 +115,8 @@ GLfloat pitch, yaw;
 int lastX, lastY;
 
 // Geometry data.
-Grid g_grid(10);
+Grid g_grid(50);
+Cube c_Cubes(3.0f, 0.5f, 4.0f);
 
 void timer(int); // Prototype.
 
@@ -156,13 +158,29 @@ void init(void)
 	stbi_set_flip_vertically_on_load(true);
 
 	// Load first image.
-	unsigned char* image = stbi_load("alex.jpg", &width, &height, &bitDepth, 0);
+	unsigned char* image = stbi_load("Ground.png", &width, &height, &bitDepth, 0);
 	if (!image) { cout << "Unable to load file!" << endl; }
 	glGenTextures(1, &blankID);
 	glBindTexture(GL_TEXTURE_2D, blankID);
 	// Note: image types with native transparency will need to be GL_RGBA instead of GL_RGB.
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
-	// glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	stbi_image_free(image);
+	// End first image.
+
+	// Load first image.
+	image = stbi_load("Platform_02.png", &width, &height, &bitDepth, 0);
+	if (!image) { cout << "Unable to load file!" << endl; }
+	glGenTextures(1, &platformID);
+	glBindTexture(GL_TEXTURE_2D, platformID);
+	// Note: image types with native transparency will need to be GL_RGBA instead of GL_RGB.
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -192,6 +210,7 @@ void init(void)
 
 	// All VAO/VBO data now in Shape.h! But we still need to do this AFTER OpenGL is initialized.
 	g_grid.BufferShape();
+	c_Cubes.BufferShape();
 
 	// Enable depth testing and face culling. 
 	glEnable(GL_DEPTH_TEST);
@@ -256,6 +275,14 @@ void display(void)
 	transformObject(glm::vec3(1.0f, 1.0f, 1.0f), X_AXIS, -90.0f, glm::vec3(0.0f, 0.0f, 0.0f));
 	g_grid.DrawShape(GL_TRIANGLES);
 	//g_grid.DrawShape(GL_LINE_STRIP);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glBindTexture(GL_TEXTURE_2D, platformID);
+
+	//Rising Platform
+	transformObject(glm::vec3(3.0f, 0.5f, 4.0), X_AXIS, 0.0, glm::vec3(15.0f, 0.0f, -26.0f));
+	c_Cubes.DrawShape(GL_TRIANGLES);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 
