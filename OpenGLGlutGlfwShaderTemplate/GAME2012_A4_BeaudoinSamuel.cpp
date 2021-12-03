@@ -89,6 +89,7 @@ unsigned char keys = 0; // Initialized to 0 or 0b00000000.
 // Texture variables.
 GLuint blankID;
 GLuint platformID;
+GLuint hedgeID;
 GLint width, height, bitDepth;
 
 // Light Variables
@@ -117,6 +118,50 @@ int lastX, lastY;
 // Geometry data.
 Grid g_grid(50);
 Cube c_Cubes(3.0f, 0.5f, 4.0f);
+Cube c_Headges[39] =
+{
+	//x     y     z
+	(1.0,   1.0,  21.0),  //Headge 0
+	(15.0,   1.0,  1.0),  //Headge 1
+	(14.0,   1.0,  1.0),  //Headge 2
+	(1.0,   1.0,  21.0),  //Headge 3
+	(33.0,   1.0,  1.0),  //Headge 4
+	(2.0,   1.0,  1.0),  //Headge 5
+	(1.0,   1.0,  8.0),  //Headge 6
+	(8.0,   1.0,  1.0),  //Headge 7
+	(1.0,   1.0,  8.0),  //Headge 8
+	(5.0,   1.0,  1.0),  //Headge 9
+	(3.0,   1.0,  1.0),  //Headge 10
+	(1.0,   1.0,  3.0),  //Headge 11
+	(7.0,   1.0,  1.0),  //Headge 12
+	(1.0,   1.0,  4.0),  //Headge 13
+	(1.0,   1.0,  4.0),  //Headge 14
+	(1.0,   1.0,  4.0),  //Headge 15
+	(1.0,   1.0,  4.0),  //Headge 16
+	(1.0,   1.0,  3.0),  //Headge 17
+	(1.0,   1.0,  1.0),  //Headge 18
+	(1.0,   1.0,  1.0),  //Headge 19
+	(1.0,   1.0,  1.0),  //Headge 20
+	(1.0,   1.0,  4.0),  //Headge 21
+	(1.0,   1.0,  2.0),  //Headge 22
+	(8.0,   1.0,  1.0),  //Headge 23
+	(9.0,   1.0,  1.0),  //Headge 24
+	(1.0,   1.0,  2.0),  //Headge 25
+	(5.0,   1.0,  1.0),  //Headge 26
+	(11.0,   1.0,  1.0),  //Headge 27
+	(6.0,   1.0,  1.0),  //Headge 28
+	(1.0,   1.0,  7.0),  //Headge 29
+	(4.0,   1.0,  1.0),  //Headge 30
+	(1.0,   1.0,  7.0),  //Headge 31
+	(1.0,   1.0,  4.0),  //Headge 32
+	(1.0,   1.0,  4.0),  //Headge 33
+	(5.0,   1.0,  1.0),  //Headge 34
+	(1.0,   1.0,  6.0),  //Headge 35
+	(6.0,   1.0,  1.0),  //Headge 36
+	(10.0,   1.0,  1.0),  //Headge 37
+	(1.0,   1.0,  10.0)   //Headge 38
+
+};
 
 void timer(int); // Prototype.
 
@@ -173,7 +218,7 @@ void init(void)
 	stbi_image_free(image);
 	// End first image.
 
-	// Load first image.
+	// Load second image.
 	image = stbi_load("Platform_02.png", &width, &height, &bitDepth, 0);
 	if (!image) { cout << "Unable to load file!" << endl; }
 	glGenTextures(1, &platformID);
@@ -187,7 +232,23 @@ void init(void)
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	stbi_image_free(image);
-	// End first image.
+	// End second image.
+
+	// Load third image.
+	image = stbi_load("hedge_ivy.png", &width, &height, &bitDepth, 0);
+	if (!image) { cout << "Unable to load file!" << endl; }
+	glGenTextures(1, &hedgeID);
+	glBindTexture(GL_TEXTURE_2D, hedgeID);
+	// Note: image types with native transparency will need to be GL_RGBA instead of GL_RGB.
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	stbi_image_free(image);
+	// End third image.
 
 	glUniform1i(glGetUniformLocation(program, "texture0"), 0);
 
@@ -211,6 +272,10 @@ void init(void)
 	// All VAO/VBO data now in Shape.h! But we still need to do this AFTER OpenGL is initialized.
 	g_grid.BufferShape();
 	c_Cubes.BufferShape();
+	for (int i = 0; i < 39; i++)
+	{
+		c_Headges[i].BufferShape();
+	}
 
 	// Enable depth testing and face culling. 
 	glEnable(GL_DEPTH_TEST);
@@ -278,13 +343,96 @@ void display(void)
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 
+	//Rising Platform
 	glBindTexture(GL_TEXTURE_2D, platformID);
 
-	//Rising Platform
 	transformObject(glm::vec3(3.0f, 0.5f, 4.0), X_AXIS, 0.0, glm::vec3(15.0f, 0.0f, -26.0f));
 	c_Cubes.DrawShape(GL_TRIANGLES);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
+
+	//Headges
+	glBindTexture(GL_TEXTURE_2D, hedgeID);
+	
+	transformObject(c_Headges[0].getCubePoints(), Y_AXIS, 90.0, glm::vec3(8.0, 0.0f, -13.0f)); //Headge 0
+	c_Headges[0].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[1].getCubePoints(), X_AXIS, 0.0, glm::vec3(8.0, 0.0f, -34.0f)); //Headge 1
+	c_Headges[1].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[2].getCubePoints(), X_AXIS, 0.0, glm::vec3(27.0, 0.0f, -34.0f));//Headge 2
+	c_Headges[2].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[3].getCubePoints(), Y_AXIS, 90.0, glm::vec3(41.0, 0.0f, -14.0f)); //Headge 3
+	c_Headges[3].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[4].getCubePoints(), X_AXIS, 0.0, glm::vec3(9.0, 0.0f, -13.0f)); //Headge 4
+	c_Headges[4].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[5].getCubePoints(), X_AXIS, 0.0, glm::vec3(9.0, 0.0f, -28.0f)); //Headge 5
+	c_Headges[5].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[6].getCubePoints(), Y_AXIS, 90.0, glm::vec3(11.0, 0.0f, -24.0f)); //Headge 6
+	c_Headges[6].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[7].getCubePoints(), X_AXIS, 0.0, glm::vec3(12.0, 0.0f, -31.0f)); //Headge 7
+	c_Headges[7].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[8].getCubePoints(), Y_AXIS, 90.0, glm::vec3(20.0, 0.0f, -24.0f)); //Headge 8
+	c_Headges[8].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[9].getCubePoints(), X_AXIS, 0.0, glm::vec3(11.0, 0.0f, -23.0f)); //Headge 9
+	c_Headges[9].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[10].getCubePoints(), X_AXIS, 0.0, glm::vec3(13.0, 0.0f, -23.0f)); //Headge 10
+	c_Headges[10].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[11].getCubePoints(), Y_AXIS, 90.0, glm::vec3(13.0, 0.0f, -20.0f)); //Headge 11
+	c_Headges[11].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[12].getCubePoints(), X_AXIS, 0.0, glm::vec3(11.0, 0.0f, -20.0f)); //Headge 12
+	c_Headges[12].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[13].getCubePoints(), Y_AXIS, 90.0, glm::vec3(11.0, 0.0f, -14.0f)); //Headge 13
+	c_Headges[13].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[14].getCubePoints(), Y_AXIS, 90.0, glm::vec3(8.0, 0.0f, -14.0f)); //Headge 14
+	c_Headges[14].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[15].getCubePoints(), Y_AXIS, 90.0, glm::vec3(17.0, 0.0f, -16.0f)); //Headge 15
+	c_Headges[15].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[16].getCubePoints(), Y_AXIS, 90.0, glm::vec3(20.0, 0.0f, -14.0f)); //Headge 16
+	c_Headges[16].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[17].getCubePoints(), Y_AXIS, 90.0, glm::vec3(23.0, 0.0f, -17.0f)); //Headge 17
+	c_Headges[17].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[18].getCubePoints(), X_AXIS, 0.0, glm::vec3(24.0, 0.0f, -14.0f)); //Headge 18
+	c_Headges[18].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[19].getCubePoints(), X_AXIS, 0.0, glm::vec3(25.0, 0.0f, -15.0f)); //Headge 19
+	c_Headges[19].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[20].getCubePoints(), X_AXIS, 0.0, glm::vec3(26.0, 0.0f, -16.0f)); //Headge 20
+	c_Headges[20].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[21].getCubePoints(), Y_AXIS, 90.0, glm::vec3(28.0, 0.0f, -14.0f)); //Headge 21
+	c_Headges[21].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[22].getCubePoints(), Y_AXIS, 90.0, glm::vec3(30.0, 0.0f, -14.0f)); //Headge 22
+	c_Headges[22].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[23].getCubePoints(), X_AXIS, 0.0, glm::vec3(30.0, 0.0f, -16.0f)); //Headge 23
+	c_Headges[23].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[24].getCubePoints(), X_AXIS, 0.0, glm::vec3(28.0, 0.0f, -18.0f)); //Headge 24
+	c_Headges[24].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[25].getCubePoints(), Y_AXIS, 90.0, glm::vec3(38.0, 0.0f, -16.0f)); //Headge 25
+	c_Headges[25].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[26].getCubePoints(), X_AXIS, 0.0, glm::vec3(34.0, 0.0f, -20.0f)); //Headge 26
+	c_Headges[26].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[27].getCubePoints(), X_AXIS, 0.0, glm::vec3(21.0, 0.0f, -20.0f)); //Headge 27
+	c_Headges[27].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[28].getCubePoints(), X_AXIS, 0.0, glm::vec3(22.0, 0.0f, -22.0f)); //Headge 28
+	c_Headges[28].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[29].getCubePoints(), Y_AXIS, 90.0, glm::vec3(23.0, 0.0f, -24.0f)); //Headge 29
+	c_Headges[29].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[30].getCubePoints(), X_AXIS, 0.0, glm::vec3(23.0, 0.0f, -31.0f)); //Headge 30
+	c_Headges[30].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[31].getCubePoints(), Y_AXIS, 90.0, glm::vec3(26.0, 0.0f, -24.0f)); //Headge 31
+	c_Headges[31].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[32].getCubePoints(), Y_AXIS, 90.0, glm::vec3(29.0, 0.0f, -21.0f)); //Headge 32
+	c_Headges[32].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[33].getCubePoints(), Y_AXIS, 90.0, glm::vec3(32.0, 0.0f, -22.0f)); //Headge 33
+	c_Headges[33].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[34].getCubePoints(), X_AXIS, 0.0, glm::vec3(29.0, 0.0f, -26.0f)); //Headge 34
+	c_Headges[34].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[35].getCubePoints(), Y_AXIS, 90.0, glm::vec3(35.0, 0.0f, -23.0f)); //Headge 35
+	c_Headges[35].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[36].getCubePoints(), X_AXIS, 0.0, glm::vec3(29.0, 0.0f, -28.0f)); //Headge 36
+	c_Headges[36].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[37].getCubePoints(), X_AXIS, 0.0, glm::vec3(29.0, 0.0f, -31.0f)); //Headge 37
+	c_Headges[37].DrawShape(GL_TRIANGLES);
+	transformObject(c_Headges[38].getCubePoints(), Y_AXIS, 90.0, glm::vec3(38.0, 0.0f, -21.0f)); //Headge 38
+	c_Headges[38].DrawShape(GL_TRIANGLES);
+
 
 	glClearColor(0.63f, 0.89f, 0.72f, 1.0f); // Set Background Color
 	

@@ -13,10 +13,49 @@ D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\Shape.h(173,30)
               _Ty=GLfloat
           ]
 D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\Shape.h(216,1): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
-D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\Shape.h(308,1): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
-D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\Shape.h(326,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\Shape.h(337,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\Shape.h(384,1): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
-D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\Shape.h(402,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\Shape.h(433,1): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\Shape.h(309,1): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\Shape.h(332,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\Shape.h(343,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\Shape.h(390,1): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\Shape.h(408,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\Shape.h(439,1): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(124,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(125,14): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(126,14): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(127,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(128,14): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(129,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(130,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(131,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(132,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(133,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(134,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(135,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(136,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(137,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(138,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(139,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(140,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(141,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(142,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(143,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(144,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(145,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(146,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(147,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(148,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(149,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(150,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(151,14): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(152,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(153,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(154,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(155,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(156,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(157,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(158,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(159,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(160,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(161,14): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\GAME2012_A4_BeaudoinSamuel.cpp(162,13): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
   OpenGLGlutGlfwShaderTemplate.vcxproj -> D:\GameDev\GAME2012---Final-Project\x64\Debug\OpenGLGlutGlfwShaderTemplate.exe

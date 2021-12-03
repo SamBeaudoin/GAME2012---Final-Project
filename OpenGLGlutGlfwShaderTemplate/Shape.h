@@ -218,6 +218,7 @@ struct Grid : public Shape // Flat grid on ground. Starts at 0,0,0 and increases
 };
 struct Cube : public Shape
 {
+	glm::vec3 scaleVec;
 	Cube(GLfloat xScale = 1.0f, GLfloat yScale = 1.0f, GLfloat zScale = 1.0f)
 	{
 		shape_indices = {
@@ -306,6 +307,11 @@ struct Cube : public Shape
 		};
 		ColorShape(1.0f, 1.0f, 1.0f);
 		CalcAverageNormals(shape_indices, shape_indices.size(), shape_vertices, shape_vertices.size());
+		scaleVec = glm::vec3(xScale, yScale, zScale);
+	}
+	glm::vec3 getCubePoints()
+	{
+		return scaleVec;
 	}
 };
 
