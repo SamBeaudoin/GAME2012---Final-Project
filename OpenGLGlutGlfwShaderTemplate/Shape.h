@@ -219,7 +219,7 @@ struct Grid : public Shape // Flat grid on ground. Starts at 0,0,0 and increases
 struct Cube : public Shape
 {
 	glm::vec3 scaleVec;
-	Cube(GLfloat xScale = 1.0f, GLfloat yScale = 1.0f, GLfloat zScale = 1.0f)
+	Cube(float xScale, float yScale, float zScale)
 	{
 		shape_indices = {
 			// Front.
