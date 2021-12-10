@@ -59,6 +59,7 @@ using namespace std;
 #define XY_AXIS glm::vec3(1,0.9,0)
 #define YZ_AXIS glm::vec3(0,1,1)
 #define XZ_AXIS glm::vec3(1,0,1)
+#define XYZ_AXIS glm::vec3(1,1,1)
 #define SPEED 0.25f
 
 #define STB_IMAGE_IMPLEMENTATION
@@ -91,6 +92,7 @@ GLuint blankID;
 GLuint platformID;
 GLuint hedgeID;
 GLuint wallID;
+GLuint pickUpID;
 GLint width, height, bitDepth;
 
 // Light Variables
@@ -118,9 +120,10 @@ int lastX, lastY;
 
 // Geometry data.
 Grid g_grid(50);
-Cube c_Cubes(3.0f, 0.2f, 4.0f);
+Cube c_Platform(3.0f, 0.2f, 4.0f);
 Cube c_Headges[39] =
 {
+
 	//x				 y			z
 	{1.0f,		  1.0f,		21.0f},  //Headge 0
 	{15.0f,		  1.0f,		 1.0f},  //Headge 1
@@ -172,6 +175,8 @@ Cube c_Walls[5] =
 	{1.0f, 5.0f, 30.0f}, // Wall #3
 	{40.0f, 5.0f, 1.0f} // Wall #4
 };
+
+Cube c_PickUp(0.5f, 0.5f, 0.5f);
 
 
 void timer(int); // Prototype.
@@ -277,6 +282,22 @@ void init(void)
 	stbi_image_free(image);
 	// End Fourth image.
 
+	// Load 5th image.
+	image = stbi_load("Ruin.jpg", &width, &height, &bitDepth, 0);
+	if (!image) { cout << "Unable to load file!" << endl; }
+	glGenTextures(1, &pickUpID);
+	glBindTexture(GL_TEXTURE_2D, pickUpID);
+	// Note: image types with native transparency will need to be GL_RGBA instead of GL_RGB.
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	stbi_image_free(image);
+	// End 5th image.
+
 	glUniform1i(glGetUniformLocation(program, "texture0"), 0);
 
 	// Setting material values.
@@ -298,7 +319,7 @@ void init(void)
 
 	// All VAO/VBO data now in Shape.h! But we still need to do this AFTER OpenGL is initialized.
 	g_grid.BufferShape();
-	c_Cubes.BufferShape();
+	c_Platform.BufferShape();
 
 	// Buffer Hedge Data
 	for (int i = 0; i < 39; i++)
@@ -311,6 +332,8 @@ void init(void)
 	{
 		c_Walls[i].BufferShape();
 	}
+
+	c_PickUp.BufferShape();
 
 	// Enable depth testing and face culling. 
 	glEnable(GL_DEPTH_TEST);
@@ -382,16 +405,20 @@ void display(void)
 	glBindTexture(GL_TEXTURE_2D, platformID);
 
 	transformObject(glm::vec3(3.0f, 0.2f, 4.0), X_AXIS, 0.0, glm::vec3(15.0f, 0.0f, -29.0f));
-	c_Cubes.DrawShape(GL_TRIANGLES);
+	c_Platform.DrawShape(GL_TRIANGLES);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	//Headges
 	glBindTexture(GL_TEXTURE_2D, hedgeID);
 	
+
 	transformObject(c_Headges[0].getCubePoints(), Y_AXIS, 0.0, glm::vec3(8.0, 0.0f, -33.0f)); //Headge 0
+
+	transformObject(c_Headges[0].getCubePoints(), Y_AXIS, 0.0, glm::vec3(8.0, 0.0f, -13.0f)); //Headge 0
+
 	c_Headges[0].DrawShape(GL_TRIANGLES);
-	transformObject(c_Headges[1].getCubePoints(), X_AXIS, 0.0, glm::vec3(8.0, 0.0f, -34.0f)); //Headge 1
+	transformObject(c_Headges[1].getCubePoints(), Y_AXIS, 0.0, glm::vec3(8.0, 2.0f, -34.0f)); //Headge 1
 	c_Headges[1].DrawShape(GL_TRIANGLES);
 	transformObject(c_Headges[2].getCubePoints(), X_AXIS, 0.0, glm::vec3(27.0, 0.0f, -34.0f));//Headge 2
 	c_Headges[2].DrawShape(GL_TRIANGLES);
@@ -488,6 +515,11 @@ void display(void)
 	c_Walls[4].DrawShape(GL_TRIANGLES);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glBindTexture(GL_TEXTURE_2D, pickUpID);
+
+	transformObject(glm::vec3(0.5f, 0.5f, 0.5), XYZ_AXIS, angle += 1.0f, glm::vec3(15.0f, 4.0f, -29.0f));
+	c_PickUp.DrawShape(GL_TRIANGLES);
 
 	glClearColor(0.63f, 0.89f, 0.72f, 1.0f); // Set Background Color
 	
