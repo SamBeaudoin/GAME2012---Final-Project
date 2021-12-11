@@ -276,39 +276,40 @@ struct Cube : public Shape
 		shape_uvs = {
 			// Front.
 			0.0f, 0.0f, 	// 0.
-			xScale, 0.0f, 	// 1. // scaleX, 0.0f, 	// 1. 
-			xScale, yScale, 	// 2. // scaleX, scaleY, 	// 2.
-			0.0f, yScale,		// 3. // 0.0f, scaleY,		// 3.
+			xScale, 0.0f, 	// 1.
+			xScale, yScale, // 2.
+			0.0f, yScale,	// 3.
 			// Right.
 			0.0f, 0.0f, 	// 1.
-			1.0f, 0.0f, 	// 5.
-			1.0f, 1.0f, 	// 6.
-			0.0f, 1.0f,		// 2.
+			zScale, 0.0f, 	// 5.
+			zScale, yScale, 	// 6.
+			0.0f, yScale,		// 2.
 			// Back.
 			0.0f, 0.0f, 	// 5.
-			1.0f, 0.0f, 	// 4.
-			1.0f, 1.0f,		// 7.
-			0.0f, 1.0f,		// 6.
+			xScale, 0.0f, 	// 4.
+			xScale, yScale,		// 7.
+			0.0f, yScale,		// 6.
 			// Left.
 			0.0f, 0.0f,		// 4.
-			1.0f, 0.0f,		// 0.
-			1.0f, 1.0f,		// 3.
-			0.0f, 1.0f,		// 7.
+			zScale, 0.0f,		// 0.
+			zScale, yScale,		// 3.
+			0.0f, yScale,		// 7.
 			// Top.
 			0.0f, 0.0f,		// 7.
-			1.0f, 0.0f,		// 3.
-			1.0f, 1.0f,		// 2.
-			0.0f, 1.0f,		// 6.
+			zScale, 0.0f,		// 3.
+			zScale, xScale,		// 2.
+			0.0f, xScale,		// 6.
 			// Bottom.
 			0.0f, 0.0f,		// 4.
-			1.0f, 0.0f,		// 5.
-			1.0f, 1.0f,		// 1.
-			0.0f, 1.0f		// 0.
+			xScale, 0.0f,		// 5.
+			xScale, zScale,		// 1.
+			0.0f, zScale		// 0.
 		};
 		ColorShape(1.0f, 1.0f, 1.0f);
 		CalcAverageNormals(shape_indices, shape_indices.size(), shape_vertices, shape_vertices.size());
 		scaleVec = glm::vec3(xScale, yScale, zScale);
 	}
+
 	glm::vec3 getCubePoints()
 	{
 		return scaleVec;

@@ -93,6 +93,8 @@ GLuint platformID;
 GLuint hedgeID;
 GLuint wallID;
 GLuint pickUpID;
+GLuint wallTopID;
+
 GLint width, height, bitDepth;
 
 // Light Variables
@@ -169,15 +171,56 @@ Cube c_Headges[39] =
 
 Cube c_Walls[5] =
 {
-	{1.0f, 1.0f, 100.0f }, // Wall #0
-	{16.0f, 5.0f, 1.0f}, // Wall #1
-	{16.0f, 5.0f, 1.0f}, // Wall #2
-	{1.0f, 5.0f, 30.0f}, // Wall #3
-	{40.0f, 5.0f, 1.0f} // Wall #4
+	{1.0f, 5.0f, 30.0f },	// Wall #0
+	{16.0f, 5.0f, 1.0f},	// Wall #1
+	{16.0f, 5.0f, 1.0f},	// Wall #2
+	{1.0f, 5.0f, 30.0f},	// Wall #3
+	{40.0f, 5.0f, 1.0f}		// Wall #4
 };
 
 Cube c_PickUp(0.5f, 0.5f, 0.5f);
 
+Cube c_WallToppings[8] =
+{
+	{0.1f, 0.5f, 31.0f},	// Wall Railing #0
+	{0.1f, 0.5f, 29.0f},	// Wall Railing #1
+	{40.0f, 0.5f, 0.1f},	// Wall Railing #2
+	{38.2f, 0.5f, 0.1f},	// Wall Railing #3
+	{0.1f, 0.5f, 31.0f},	// Wall Railing #4
+	{0.1f, 0.5f, 29.0f},	// Wall Railing #5
+	{40.0f, 0.5f, 0.1f},	// Wall Railing #6
+	{38.2f, 0.5f, 0.1f},	// Wall Railing #7
+};
+
+Cube c_WallCrenells[9] =
+{
+	{0.1f, 0.3f, 3.0f},
+	{0.1f, 0.3f, 3.0f},
+	{0.1f, 0.3f, 3.0f},
+	{0.1f, 0.3f, 3.0f},
+	{0.1f, 0.3f, 3.0f},
+	{0.1f, 0.3f, 3.0f},
+	{0.1f, 0.3f, 3.0f},
+	{0.1f, 0.3f, 3.0f},
+	{0.1f, 0.3f, 3.0f}
+};
+
+Cube c_WallCrenells1[13] =
+{
+	{2.6f, 0.3f, 0.1f},
+	{2.6f, 0.3f, 0.1f},
+	{2.6f, 0.3f, 0.1f},
+	{2.6f, 0.3f, 0.1f},
+	{2.6f, 0.3f, 0.1f},
+	{2.6f, 0.3f, 0.1f},
+	{2.6f, 0.3f, 0.1f},
+	{2.6f, 0.3f, 0.1f},
+	{2.6f, 0.3f, 0.1f},
+	{2.6f, 0.3f, 0.1f},
+	{2.6f, 0.3f, 0.1f},
+	{2.6f, 0.3f, 0.1f},
+	{2.6f, 0.3f, 0.1f}
+};
 
 void timer(int); // Prototype.
 
@@ -298,6 +341,22 @@ void init(void)
 	stbi_image_free(image);
 	// End 5th image.
 
+	// Load 6th image.
+	image = stbi_load("Tile_Sandstone.png", &width, &height, &bitDepth, 0);
+	if (!image) { cout << "Unable to load file!" << endl; }
+	glGenTextures(1, &wallTopID);
+	glBindTexture(GL_TEXTURE_2D, wallTopID);
+	// Note: image types with native transparency will need to be GL_RGBA instead of GL_RGB.
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	stbi_image_free(image);
+	// End 6th image.
+
 	glUniform1i(glGetUniformLocation(program, "texture0"), 0);
 
 	// Setting material values.
@@ -333,7 +392,24 @@ void init(void)
 		c_Walls[i].BufferShape();
 	}
 
+	for (int i = 0; i < 8; i++)
+	{
+		c_WallToppings[i].BufferShape();
+	}
+
+	for (int i = 0; i < 9; i++)
+	{
+		c_WallCrenells[i].BufferShape();
+	}
+
+	for (int i = 0; i < 13; i++)
+	{
+		c_WallCrenells1[i].BufferShape();
+	}
+
+	// Pick-up
 	c_PickUp.BufferShape();
+
 
 	// Enable depth testing and face culling. 
 	glEnable(GL_DEPTH_TEST);
@@ -411,14 +487,11 @@ void display(void)
 
 	//Headges
 	glBindTexture(GL_TEXTURE_2D, hedgeID);
-	
+
 
 	transformObject(c_Headges[0].getCubePoints(), Y_AXIS, 0.0, glm::vec3(8.0, 0.0f, -33.0f)); //Headge 0
-
-	transformObject(c_Headges[0].getCubePoints(), Y_AXIS, 0.0, glm::vec3(8.0, 0.0f, -13.0f)); //Headge 0
-
 	c_Headges[0].DrawShape(GL_TRIANGLES);
-	transformObject(c_Headges[1].getCubePoints(), Y_AXIS, 0.0, glm::vec3(8.0, 2.0f, -34.0f)); //Headge 1
+	transformObject(c_Headges[1].getCubePoints(), Y_AXIS, 0.0, glm::vec3(8.0, 0.0f, -34.0f)); //Headge 1
 	c_Headges[1].DrawShape(GL_TRIANGLES);
 	transformObject(c_Headges[2].getCubePoints(), X_AXIS, 0.0, glm::vec3(27.0, 0.0f, -34.0f));//Headge 2
 	c_Headges[2].DrawShape(GL_TRIANGLES);
@@ -499,27 +572,110 @@ void display(void)
 	glBindTexture(GL_TEXTURE_2D, wallID);
 
 	// Walls
-	transformObject(glm::vec3(1.0f, 5.0f, 30.0f), Y_AXIS, 0.0f, glm::vec3(5.0f, 0.0f, -40.0f));
+	transformObject(glm::vec3(1.0f, 5.0f, 30.0f), Y_AXIS, 0.0f, glm::vec3(5.0f, 0.0f, -39.0f));
 	c_Walls[0].DrawShape(GL_TRIANGLES);
-
 	transformObject(glm::vec3(18.0f, 5.0f, 1.0f), X_AXIS, 0.0, glm::vec3(5.0f, 0.0f, -40.0f));
 	c_Walls[1].DrawShape(GL_TRIANGLES);
-
 	transformObject(glm::vec3(18.0f, 5.0f, 1.0f), X_AXIS, 0.0, glm::vec3(27.0f, 0.0f, -40.0f));
 	c_Walls[2].DrawShape(GL_TRIANGLES);
-
-	transformObject(glm::vec3(1.0f, 5.0f, 30.0f), X_AXIS, 0.0, glm::vec3(45.0f, 0.0f, -40.0f));
+	transformObject(glm::vec3(1.0f, 5.0f, 30.0f), X_AXIS, 0.0, glm::vec3(44.0f, 0.0f, -39.0f));
 	c_Walls[3].DrawShape(GL_TRIANGLES);
-
 	transformObject(glm::vec3(40.0f, 5.0f, 1.0f), X_AXIS, 0.0, glm::vec3(5.0f, 0.0f, -10.0f));
 	c_Walls[4].DrawShape(GL_TRIANGLES);
 
+	// Wall Toppings
 	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindTexture(GL_TEXTURE_2D, wallTopID);
 
+	transformObject(c_WallToppings[0].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(5.0f, 5.0f, -40.0f)); // 0
+	c_WallToppings[0].DrawShape(GL_TRIANGLES);
+	transformObject(c_WallToppings[1].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(5.9f, 5.0f, -39.0f)); // 1
+	c_WallToppings[1].DrawShape(GL_TRIANGLES);
+	transformObject(c_WallToppings[2].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(5.0f, 5.0f, -40.0f)); // 2
+	c_WallToppings[2].DrawShape(GL_TRIANGLES);
+	transformObject(c_WallToppings[3].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(5.9f, 5.0f, -39.1f)); // 3
+	c_WallToppings[3].DrawShape(GL_TRIANGLES);
+	transformObject(c_WallToppings[4].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(44.9f, 5.0f, -40.0f)); // 4
+	c_WallToppings[4].DrawShape(GL_TRIANGLES);
+	transformObject(c_WallToppings[5].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(44.0f, 5.0f, -39.0f)); // 5
+	c_WallToppings[5].DrawShape(GL_TRIANGLES);
+	transformObject(c_WallToppings[6].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(5.0f, 5.0f, -9.1f)); // 6
+	c_WallToppings[6].DrawShape(GL_TRIANGLES);
+	transformObject(c_WallToppings[7].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(5.9f, 5.0f, -10.0f)); // 7
+	c_WallToppings[7].DrawShape(GL_TRIANGLES);
+
+	// Wall Crenells
+	float j = 0.0f;
+	for (int i = 0; i < 9; i++)
+	{
+		transformObject(c_WallCrenells[i].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(5.0f, 5.5f, -40.0f + j ));	// WallTop 0
+		c_WallCrenells[i].DrawShape(GL_TRIANGLES);
+		j += 3.5f;
+	}
+
+	j = 0.0f;
+	for (int i = 0; i < 9; i++)
+	{
+		transformObject(c_WallCrenells[i].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(5.9f, 5.5f, -40.0f + j));	// WallTop 1
+		c_WallCrenells[i].DrawShape(GL_TRIANGLES);
+		j += 3.5f;
+	}
+	 
+	j = 0.0f;
+	for (int i = 0; i < 9; i++)
+	{
+		transformObject(c_WallCrenells[i].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(44.9f, 5.5f, -40.0f + j));	// WallTop 4
+		c_WallCrenells[i].DrawShape(GL_TRIANGLES);
+		j += 3.5f;
+	}
+
+	j = 0.0f;
+	for (int i = 0; i < 9; i++)
+	{
+		transformObject(c_WallCrenells[i].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(44.0f, 5.5f, -40.0f + j));	// WallTop 5
+		c_WallCrenells[i].DrawShape(GL_TRIANGLES);
+		j += 3.5f;
+	}
+
+	j = 0.0f;
+	for (int i = 0; i < 13; i++)
+	{
+		transformObject(c_WallCrenells1[i].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(5.0f + j, 5.5f, -40.0f));	// WallTop 2
+		c_WallCrenells1[i].DrawShape(GL_TRIANGLES);
+		j += c_WallCrenells1[i].getCubePoints().x + 0.5f;
+	}
+
+	j = 0.0f;
+	for (int i = 0; i < 13; i++)
+	{
+		transformObject(c_WallCrenells1[i].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(5.0f + j, 5.5f, -39.1f));	// WallTop 3
+		c_WallCrenells1[i].DrawShape(GL_TRIANGLES);
+		j += c_WallCrenells1[i].getCubePoints().x + 0.5f;
+	}
+	
+	j = 0.0f;
+	for (int i = 0; i < 13; i++)
+	{
+		transformObject(c_WallCrenells1[i].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(5.0f + j, 5.5f, -9.1f));	// WallTop 6
+		c_WallCrenells1[i].DrawShape(GL_TRIANGLES);
+		j += c_WallCrenells1[i].getCubePoints().x + 0.5f;
+	}
+
+	j = 0.0f;
+	for (int i = 0; i < 13; i++)
+	{
+		transformObject(c_WallCrenells1[i].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(5.0f + j, 5.5f, -10.0f));	// WallTop 7
+		c_WallCrenells1[i].DrawShape(GL_TRIANGLES);
+		j += c_WallCrenells1[i].getCubePoints().x + 0.5f;
+	}
+
+	// Pick-Up
+	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindTexture(GL_TEXTURE_2D, pickUpID);
 
 	transformObject(glm::vec3(0.5f, 0.5f, 0.5), XYZ_AXIS, angle += 1.0f, glm::vec3(15.0f, 4.0f, -29.0f));
 	c_PickUp.DrawShape(GL_TRIANGLES);
+
 
 	glClearColor(0.63f, 0.89f, 0.72f, 1.0f); // Set Background Color
 	
