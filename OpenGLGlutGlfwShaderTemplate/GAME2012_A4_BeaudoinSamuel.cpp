@@ -204,35 +204,34 @@ Cube c_WallToppings[8] =
 
 Cube c_WallCrenells[9] =
 {
-	{0.1f, 0.3f, 3.0f},
-	{0.1f, 0.3f, 3.0f},
-	{0.1f, 0.3f, 3.0f},
-	{0.1f, 0.3f, 3.0f},
-	{0.1f, 0.3f, 3.0f},
-	{0.1f, 0.3f, 3.0f},
-	{0.1f, 0.3f, 3.0f},
-	{0.1f, 0.3f, 3.0f},
-	{0.1f, 0.3f, 3.0f}
+	{0.1f, 0.8f, 3.0f},
+	{0.1f, 0.8f, 3.0f},
+	{0.1f, 0.8f, 3.0f},
+	{0.1f, 0.8f, 3.0f},
+	{0.1f, 0.8f, 3.0f},
+	{0.1f, 0.8f, 3.0f},
+	{0.1f, 0.8f, 3.0f},
+	{0.1f, 0.8f, 3.0f},
+	{0.1f, 0.8f, 3.0f}
 };
 
 Cube c_WallCrenells1[13] =
 {
-	{2.6f, 0.3f, 0.1f},
-	{2.6f, 0.3f, 0.1f},
-	{2.6f, 0.3f, 0.1f},
-	{2.6f, 0.3f, 0.1f},
-	{2.6f, 0.3f, 0.1f},
-	{2.6f, 0.3f, 0.1f},
-	{2.6f, 0.3f, 0.1f},
-	{2.6f, 0.3f, 0.1f},
-	{2.6f, 0.3f, 0.1f},
-	{2.6f, 0.3f, 0.1f},
-	{2.6f, 0.3f, 0.1f},
-	{2.6f, 0.3f, 0.1f},
-	{2.6f, 0.3f, 0.1f}
+	{2.6f, 0.8f, 0.1f},
+	{2.6f, 0.8f, 0.1f},
+	{2.6f, 0.8f, 0.1f},
+	{2.6f, 0.8f, 0.1f},
+	{2.6f, 0.8f, 0.1f},
+	{2.6f, 0.8f, 0.1f},
+	{2.6f, 0.8f, 0.1f},
+	{2.6f, 0.8f, 0.1f},
+	{2.6f, 0.8f, 0.1f},
+	{2.6f, 0.8f, 0.1f},
+	{2.6f, 0.8f, 0.1f},
+	{2.6f, 0.8f, 0.1f},
+	{2.6f, 0.8f, 0.1f}
 };
 
-<<<<<<< HEAD
 Prism p_Towers[4]
 {
 	8,
@@ -247,7 +246,8 @@ Cone c_towerRoof[4]
 	8,
 	8,
 	8
-=======
+};
+
 Cube c_GuardHouse[6] =
 {
 	{4.0f, 5.0f, 4.0f},		// Guardhouse
@@ -275,7 +275,6 @@ Cube c_GuardHouseTrimmings[10] =
 Cone c_RailingTopper[2] =
 {
 	{4}, {4}
->>>>>>> SamBranch
 };
 
 void timer(int); // Prototype.
@@ -724,7 +723,7 @@ void display(void)
 	float j = 0.0f;
 	for (int i = 0; i < 9; i++)
 	{
-		transformObject(c_WallCrenells[i].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(5.0f, 5.5f, -40.0f + j ));	// WallTop 0
+		transformObject(c_WallCrenells[i].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(5.0f, 5.0f, -40.0f + j ));	// WallTop 0
 		c_WallCrenells[i].DrawShape(GL_TRIANGLES);
 		j += 3.5f;
 	}
@@ -732,7 +731,7 @@ void display(void)
 	j = 0.0f;
 	for (int i = 0; i < 9; i++)
 	{
-		transformObject(c_WallCrenells[i].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(5.9f, 5.5f, -40.0f + j));	// WallTop 1
+		transformObject(c_WallCrenells[i].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(5.9f, 5.0f, -40.0f + j));	// WallTop 1
 		c_WallCrenells[i].DrawShape(GL_TRIANGLES);
 		j += 3.5f;
 	}
@@ -740,7 +739,7 @@ void display(void)
 	j = 0.0f;
 	for (int i = 0; i < 9; i++)
 	{
-		transformObject(c_WallCrenells[i].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(44.9f, 5.5f, -40.0f + j));	// WallTop 4
+		transformObject(c_WallCrenells[i].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(44.9f, 5.0f, -40.0f + j));	// WallTop 4
 		c_WallCrenells[i].DrawShape(GL_TRIANGLES);
 		j += 3.5f;
 	}
@@ -748,7 +747,7 @@ void display(void)
 	j = 0.0f;
 	for (int i = 0; i < 9; i++)
 	{
-		transformObject(c_WallCrenells[i].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(44.0f, 5.5f, -40.0f + j));	// WallTop 5
+		transformObject(c_WallCrenells[i].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(44.0f, 5.0f, -40.0f + j));	// WallTop 5
 		c_WallCrenells[i].DrawShape(GL_TRIANGLES);
 		j += 3.5f;
 	}
@@ -756,7 +755,7 @@ void display(void)
 	j = 0.0f;
 	for (int i = 0; i < 13; i++)
 	{
-		transformObject(c_WallCrenells1[i].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(5.0f + j, 5.5f, -40.0f));	// WallTop 2
+		transformObject(c_WallCrenells1[i].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(5.0f + j, 5.0f, -40.0f));	// WallTop 2
 		c_WallCrenells1[i].DrawShape(GL_TRIANGLES);
 		j += c_WallCrenells1[i].getCubePoints().x + 0.5f;
 	}
@@ -764,7 +763,7 @@ void display(void)
 	j = 0.0f;
 	for (int i = 0; i < 13; i++)
 	{
-		transformObject(c_WallCrenells1[i].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(5.0f + j, 5.5f, -39.1f));	// WallTop 3
+		transformObject(c_WallCrenells1[i].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(5.0f + j, 5.0f, -39.1f));	// WallTop 3
 		c_WallCrenells1[i].DrawShape(GL_TRIANGLES);
 		j += c_WallCrenells1[i].getCubePoints().x + 0.5f;
 	}
@@ -772,7 +771,7 @@ void display(void)
 	j = 0.0f;
 	for (int i = 0; i < 13; i++)
 	{
-		transformObject(c_WallCrenells1[i].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(5.0f + j, 5.5f, -9.1f));	// WallTop 6
+		transformObject(c_WallCrenells1[i].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(5.0f + j, 5.0f, -9.1f));	// WallTop 6
 		c_WallCrenells1[i].DrawShape(GL_TRIANGLES);
 		j += c_WallCrenells1[i].getCubePoints().x + 0.5f;
 	}
@@ -780,7 +779,7 @@ void display(void)
 	j = 0.0f;
 	for (int i = 0; i < 13; i++)
 	{
-		transformObject(c_WallCrenells1[i].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(5.0f + j, 5.5f, -10.0f));	// WallTop 7
+		transformObject(c_WallCrenells1[i].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(5.0f + j, 5.0f, -10.0f));	// WallTop 7
 		c_WallCrenells1[i].DrawShape(GL_TRIANGLES);
 		j += c_WallCrenells1[i].getCubePoints().x + 0.5f;
 	}
@@ -863,16 +862,16 @@ void display(void)
 
 	// Prism.
 	glBindTexture(GL_TEXTURE_2D, towerID);
-	transformObject(glm::vec3(2.0f, 3.5f, 2.0f), X_AXIS, 0.0f, glm::vec3(4.5f, 5.0f, -10.53f));
+	transformObject(glm::vec3(2.0f, 8.5f, 2.0f), X_AXIS, 0.0f, glm::vec3(4.5f, 0.0f, -10.53f));
 	p_Towers[0].DrawShape(GL_TRIANGLES);
 
-	transformObject(glm::vec3(2.0f, 3.5f, 2.0f), X_AXIS, 0.0f, glm::vec3(43.3f, 5.0f, -10.53f));
+	transformObject(glm::vec3(2.0f, 8.5f, 2.0f), X_AXIS, 0.0f, glm::vec3(43.3f, 0.0f, -10.53f));
 	p_Towers[1].DrawShape(GL_TRIANGLES);
 
-	transformObject(glm::vec3(2.0f, 3.5f, 2.0f), X_AXIS, 0.0f, glm::vec3(43.3f, 5.0f, -40.35f));
+	transformObject(glm::vec3(2.0f, 8.5f, 2.0f), X_AXIS, 0.0f, glm::vec3(43.3f, 0.0f, -40.35f));
 	p_Towers[2].DrawShape(GL_TRIANGLES);
 
-	transformObject(glm::vec3(2.0f, 3.5f, 2.0f), X_AXIS, 0.0f, glm::vec3(4.5f, 5.0f, -40.35f));
+	transformObject(glm::vec3(2.0f, 8.5f, 2.0f), X_AXIS, 0.0f, glm::vec3(4.5f, 0.0f, -40.35f));
 	p_Towers[3].DrawShape(GL_TRIANGLES);
 
 
