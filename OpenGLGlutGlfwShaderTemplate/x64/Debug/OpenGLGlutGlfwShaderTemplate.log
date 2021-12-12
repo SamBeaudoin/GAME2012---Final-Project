@@ -1,22 +1,22 @@
 ﻿  GAME2012_A4_BeaudoinSamuel.cpp
-D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\Shape.h(36,23): warning C4267: 'return': conversion from 'size_t' to 'GLsizei', possible loss of data
-D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\Shape.h(97,21): warning C4018: '<': signed/unsigned mismatch
-D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\Shape.h(160,1): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
-D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\Shape.h(172,30): warning C4244: 'argument': conversion from 'int' to '_Ty', possible loss of data
+D:\School Stuff\Game-F2021\3D Graphics\Final_Project\GAME2012 - Final Project\OpenGLGlutGlfwShaderTemplate\Shape.h(36,23): warning C4267: 'return': conversion from 'size_t' to 'GLsizei', possible loss of data
+D:\School Stuff\Game-F2021\3D Graphics\Final_Project\GAME2012 - Final Project\OpenGLGlutGlfwShaderTemplate\Shape.h(97,21): warning C4018: '<': signed/unsigned mismatch
+D:\School Stuff\Game-F2021\3D Graphics\Final_Project\GAME2012 - Final Project\OpenGLGlutGlfwShaderTemplate\Shape.h(160,1): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\School Stuff\Game-F2021\3D Graphics\Final_Project\GAME2012 - Final Project\OpenGLGlutGlfwShaderTemplate\Shape.h(172,30): warning C4244: 'argument': conversion from 'int' to '_Ty', possible loss of data
           with
           [
               _Ty=GLfloat
           ]
-D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\Shape.h(173,30): warning C4244: 'argument': conversion from 'int' to '_Ty', possible loss of data
+D:\School Stuff\Game-F2021\3D Graphics\Final_Project\GAME2012 - Final Project\OpenGLGlutGlfwShaderTemplate\Shape.h(173,30): warning C4244: 'argument': conversion from 'int' to '_Ty', possible loss of data
           with
           [
               _Ty=GLfloat
           ]
-D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\Shape.h(216,1): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
-D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\Shape.h(309,1): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
-D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\Shape.h(333,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\Shape.h(344,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\Shape.h(391,1): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
-D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\Shape.h(409,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-D:\GameDev\GAME2012---Final-Project\OpenGLGlutGlfwShaderTemplate\Shape.h(440,1): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
-  OpenGLGlutGlfwShaderTemplate.vcxproj -> D:\GameDev\GAME2012---Final-Project\x64\Debug\OpenGLGlutGlfwShaderTemplate.exe
+D:\School Stuff\Game-F2021\3D Graphics\Final_Project\GAME2012 - Final Project\OpenGLGlutGlfwShaderTemplate\Shape.h(216,1): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\School Stuff\Game-F2021\3D Graphics\Final_Project\GAME2012 - Final Project\OpenGLGlutGlfwShaderTemplate\Shape.h(309,1): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\School Stuff\Game-F2021\3D Graphics\Final_Project\GAME2012 - Final Project\OpenGLGlutGlfwShaderTemplate\Shape.h(333,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\School Stuff\Game-F2021\3D Graphics\Final_Project\GAME2012 - Final Project\OpenGLGlutGlfwShaderTemplate\Shape.h(344,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\School Stuff\Game-F2021\3D Graphics\Final_Project\GAME2012 - Final Project\OpenGLGlutGlfwShaderTemplate\Shape.h(391,1): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\School Stuff\Game-F2021\3D Graphics\Final_Project\GAME2012 - Final Project\OpenGLGlutGlfwShaderTemplate\Shape.h(409,1): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\School Stuff\Game-F2021\3D Graphics\Final_Project\GAME2012 - Final Project\OpenGLGlutGlfwShaderTemplate\Shape.h(440,1): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+  OpenGLGlutGlfwShaderTemplate.vcxproj -> D:\School Stuff\Game-F2021\3D Graphics\Final_Project\GAME2012 - Final Project\x64\Debug\OpenGLGlutGlfwShaderTemplate.exe
