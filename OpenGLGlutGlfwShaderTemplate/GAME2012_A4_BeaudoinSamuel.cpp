@@ -100,17 +100,23 @@ GLint width, height, bitDepth;
 // Light Variables
 glm::vec3 light_position;
 
-// Light objects. Now OOP.
+// Light objects.
 AmbientLight aLight(
 	glm::vec3(1.0f, 1.0f, 1.0f),
 	0.5f);
 
-PointLight pLight(
-	glm::vec3(16.5f, 0.0f, -20.0f),	// Position.
-	10.0f,							// Range.
-	1.0f, 4.5f, 75.0f,				// Constant, Linear, Exponent.   
-	glm::vec3(0.5f, 1.0f, 0.5f),	// Diffuse colour.
-	1.0f);							// Diffuse strength.
+PointLight pLights[2] = {
+	{ glm::vec3(16.5f, 4.4f, -23.0f),	// Position.
+	25.0f,								// Range.
+	1.0f, 4.5f, 75.0f,					// Constant, Linear, Quadratic.   
+	glm::vec3(0.1f, 1.0f, 0.1f),		// Diffuse colour.
+	1.0f },								// Diffuse strength.
+
+	{ glm::vec3(33.5f, 0.4f, -23.0f),	// Position.
+	10.0f,								// Range.
+	1.0f, 4.5f, 75.0f,					// Constant, Linear, Quadratic.   
+	glm::vec3(1.0f, 0.2f, 0.2f),		// Diffuse colour.
+	1.0f } };							// Diffuse strength.
 
 Material mat = { 1.0f, 32 }; // Alternate way to construct an object.
 
@@ -220,6 +226,35 @@ Cube c_WallCrenells1[13] =
 	{2.6f, 0.3f, 0.1f},
 	{2.6f, 0.3f, 0.1f},
 	{2.6f, 0.3f, 0.1f}
+};
+
+Cube c_GuardHouse[6] =
+{
+	{4.0f, 5.0f, 4.0f},		// Guardhouse
+	{1.0f, 2.0f, 0.1f},		// Gate #1
+	{1.0f, 2.0f, 0.1f},		// Gate #2
+	{1.75f, 0.75, 0.3f},	// High Step
+	{1.75f, 0.50, 0.3f},	// Med Step
+	{1.75f, 0.25, 0.3f}		// Low Step
+};
+
+Cube c_GuardHouseTrimmings[10] =
+{
+	{0.1f, 2.0f, 0.2f},		// Outside Left 
+	{0.1f, 2.0f, 0.2f},		// Outside Right
+	{1.2f, 0.1f, 0.2f},		// Outside Lip
+	{0.1f, 2.0f, 0.2f},		// Inside Left 
+	{0.1f, 2.0f, 0.2f},		// Inside Right
+	{1.2f, 0.1f, 0.2f},		// Inside Lip
+	{0.1f, 0.1f, 1.345f},	// Rail Left
+	{0.1f, 0.1f, 1.345f},	// Rail Right
+	{0.1f, 1.0f, 0.1f},		// Rail Right Support
+	{0.1f, 1.0f, 0.1f},		// Rail Left Support
+};
+
+Cone c_RailingTopper[2] =
+{
+	{4}, {4}
 };
 
 void timer(int); // Prototype.
@@ -367,14 +402,20 @@ void init(void)
 	glUniform3f(glGetUniformLocation(program, "aLight.base.diffuseColour"), aLight.diffuseColour.x, aLight.diffuseColour.y, aLight.diffuseColour.z);
 	glUniform1f(glGetUniformLocation(program, "aLight.base.diffuseStrength"), aLight.diffuseStrength);
 
-	// Setting point light.
-	glUniform3f(glGetUniformLocation(program, "pLight.base.diffuseColour"), pLight.diffuseColour.x, pLight.diffuseColour.y, pLight.diffuseColour.z);
-	glUniform1f(glGetUniformLocation(program, "pLight.base.diffuseStrength"), pLight.diffuseStrength);
+	// Setting point lights.
+	glUniform3f(glGetUniformLocation(program, "pLights[0].base.diffuseColour"), pLights[0].diffuseColour.x, pLights[0].diffuseColour.y, pLights[0].diffuseColour.z);
+	glUniform1f(glGetUniformLocation(program, "pLights[0].base.diffuseStrength"), pLights[0].diffuseStrength);
+	glUniform3f(glGetUniformLocation(program, "pLights[0].position"), pLights[0].position.x, pLights[0].position.y, pLights[0].position.z);
+	glUniform1f(glGetUniformLocation(program, "pLights[0].constant"), pLights[0].constant);
+	glUniform1f(glGetUniformLocation(program, "pLights[0].linear"), pLights[0].linear);
+	glUniform1f(glGetUniformLocation(program, "pLights[0].quadratic"), pLights[0].quadratic);
 
-	glUniform3f(glGetUniformLocation(program, "pLight.position"), pLight.position.x, pLight.position.y, pLight.position.z);
-	glUniform1f(glGetUniformLocation(program, "pLight.constant"), pLight.constant);
-	glUniform1f(glGetUniformLocation(program, "pLight.linear"), pLight.linear);
-	glUniform1f(glGetUniformLocation(program, "pLight.exponent"), pLight.exponent);
+	glUniform3f(glGetUniformLocation(program, "pLights[1].base.diffuseColour"), pLights[1].diffuseColour.x, pLights[1].diffuseColour.y, pLights[1].diffuseColour.z);
+	glUniform1f(glGetUniformLocation(program, "pLights[1].base.diffuseStrength"), pLights[1].diffuseStrength);
+	glUniform3f(glGetUniformLocation(program, "pLights[1].position"), pLights[1].position.x, pLights[1].position.y, pLights[1].position.z);
+	glUniform1f(glGetUniformLocation(program, "pLights[1].constant"), pLights[1].constant);
+	glUniform1f(glGetUniformLocation(program, "pLights[1].linear"), pLights[1].linear);
+	glUniform1f(glGetUniformLocation(program, "pLights[1].quadratic"), pLights[1].quadratic);
 
 	// All VAO/VBO data now in Shape.h! But we still need to do this AFTER OpenGL is initialized.
 	g_grid.BufferShape();
@@ -405,6 +446,21 @@ void init(void)
 	for (int i = 0; i < 13; i++)
 	{
 		c_WallCrenells1[i].BufferShape();
+	}
+
+	for (int i = 0; i < 6; i++)
+	{
+		c_GuardHouse[i].BufferShape();
+	}
+	
+	for (int i = 0; i < 10; i++)
+	{
+		c_GuardHouseTrimmings[i].BufferShape();
+	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		c_RailingTopper[i].BufferShape();
 	}
 
 	// Pick-up
@@ -452,9 +508,6 @@ void transformObject(glm::vec3 scale, glm::vec3 rotationAxis, float rotationAngl
 	
 	// We must now update the View.
 	calculateView();
-
-	pLight.position += light_position;
-	glUniform3f(glGetUniformLocation(program, "pLight.position"), pLight.position.x, pLight.position.y, pLight.position.z);
 
 	glUniformMatrix4fv(modelID, 1, GL_FALSE, &Model[0][0]);
 	glUniformMatrix4fv(viewID, 1, GL_FALSE, &View[0][0]);
@@ -669,11 +722,78 @@ void display(void)
 		j += c_WallCrenells1[i].getCubePoints().x + 0.5f;
 	}
 
+	// Guardhouse!
+	transformObject(c_GuardHouse[0].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(23.0f, 0.0f, -40.0f));	// Guardhouse Size = {4.0f, 5.0f, 3.0f}
+	c_GuardHouse[0].DrawShape(GL_TRIANGLES);														
+			
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindTexture(GL_TEXTURE_2D, wallID);
+
+	transformObject(c_GuardHouse[1].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(24.5f, 0.0f, -40.1f));	// Gate #1 {1.0f, 2.0f, 0.1f}
+	c_GuardHouse[1].DrawShape(GL_TRIANGLES);														
+																							
+	transformObject(c_GuardHouse[2].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(24.5f, 0.75f, -36.0f));	// Gate #2
+	c_GuardHouse[2].DrawShape(GL_TRIANGLES);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindTexture(GL_TEXTURE_2D, wallTopID);
+
+	transformObject(c_GuardHouse[3].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(24.125f, 0.0f, -36.0f));	// High Step {1.75f, 0.75, 0.3f}
+	c_GuardHouse[3].DrawShape(GL_TRIANGLES);
+
+	transformObject(c_GuardHouse[4].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(24.125f, 0.0f, -35.7f));	// Med Step
+	c_GuardHouse[4].DrawShape(GL_TRIANGLES);
+
+	transformObject(c_GuardHouse[5].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(24.125f, 0.0f, -35.4f));	// Low Step
+	c_GuardHouse[5].DrawShape(GL_TRIANGLES);
+
+	// Guardhouse Trimmings!
+
+	transformObject(c_GuardHouseTrimmings[0].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(24.4f, 0.0f, -40.2f)); //{0.1f, 2.0f, 0.2f},	// Outside Left 
+	c_GuardHouseTrimmings[0].DrawShape(GL_TRIANGLES);
+	
+	transformObject(c_GuardHouseTrimmings[1].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(25.5f, 0.0f, -40.2f));//{ 0.1f, 2.0f, 0.2f },		// Outside Right
+	c_GuardHouseTrimmings[1].DrawShape(GL_TRIANGLES);
+
+	transformObject(c_GuardHouseTrimmings[2].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(24.4f, 2.0f, -40.2f)); //{2.2f, 0.1f, 0.2f},	// Outside Left 
+	c_GuardHouseTrimmings[2].DrawShape(GL_TRIANGLES);
+
+
+	transformObject(c_GuardHouseTrimmings[3].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(24.4f, 0.75f, -36.0f));//{0.1f, 2.0f, 0.2f},		// Inside Left 
+	c_GuardHouseTrimmings[3].DrawShape(GL_TRIANGLES);														 
+																											 
+	transformObject(c_GuardHouseTrimmings[4].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(25.5f, 0.75f, -36.0f));//{0.1f, 2.0f, 0.2f},		// Inside Right
+	c_GuardHouseTrimmings[4].DrawShape(GL_TRIANGLES);
+
+	transformObject(c_GuardHouseTrimmings[5].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(24.4f, 2.75f, -36.0f));//{2.2f, 0.1f, 0.2f},		// Inside Lip
+	c_GuardHouseTrimmings[5].DrawShape(GL_TRIANGLES);
+
+	transformObject(c_GuardHouseTrimmings[6].getCubePoints(), X_AXIS, 30.0f, glm::vec3(24.3f, 1.35f, -36.4f));//{0.1f, 0.1f, 1.345f},		// Rail Left
+	c_GuardHouseTrimmings[6].DrawShape(GL_TRIANGLES);
+
+	transformObject(c_GuardHouseTrimmings[7].getCubePoints(), X_AXIS, 30.0f, glm::vec3(25.6f, 1.35f, -36.4f));//{0.1f, 0.1f, 1.345f},		// Rail Right
+	c_GuardHouseTrimmings[7].DrawShape(GL_TRIANGLES);
+
+	transformObject(c_GuardHouseTrimmings[8].getCubePoints(), X_AXIS, 0.0f, glm::vec3(25.6f, -0.2f, -35.25f));//{0.1f, 0.1f, 1.345f},		// Rail Support Right
+	c_GuardHouseTrimmings[8].DrawShape(GL_TRIANGLES);
+
+	transformObject(c_GuardHouseTrimmings[9].getCubePoints(), X_AXIS, 0.0f, glm::vec3(24.3f, -0.2f, -35.25f));//{0.1f, 0.1f, 1.345f},		// Rail Support Left
+	c_GuardHouseTrimmings[9].DrawShape(GL_TRIANGLES);
+
+	// Railing Toppers
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindTexture(GL_TEXTURE_2D, hedgeID);
+	transformObject({ 0.2f,0.2f,0.2f }, Y_AXIS, 0.0f, glm::vec3(24.25f, 0.8f, -35.3f)); // Rail Cone Left
+	c_RailingTopper[0].DrawShape(GL_TRIANGLES);
+
+	transformObject({ 0.2f,0.2f,0.2f }, Y_AXIS, 0.0f, glm::vec3(25.55f, 0.8f, -35.3f)); // Rail Cone Right
+	c_RailingTopper[1].DrawShape(GL_TRIANGLES);
+
 	// Pick-Up
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindTexture(GL_TEXTURE_2D, pickUpID);
 
-	transformObject(glm::vec3(0.5f, 0.5f, 0.5), XYZ_AXIS, angle += 1.0f, glm::vec3(15.0f, 4.0f, -29.0f));
+	transformObject(glm::vec3(0.5f, 0.5f, 0.5), XYZ_AXIS, angle += 1.0f, glm::vec3(33.2f, 0.6f, -24.5f));
 	c_PickUp.DrawShape(GL_TRIANGLES);
 
 
@@ -832,18 +952,18 @@ void keyUp(unsigned char key, int x, int y) // x and y is mouse location upon ke
 		break;
 
 
-	case 'i':
-		light_position.z += 1.0f * MOVESPEED;
-		break;
-	case 'j':
-		light_position.x += 1.0f * MOVESPEED;
-		break;				
-	case 'k':				
-		light_position.z -= 1.0f * MOVESPEED;
-		break;				
-	case 'l':				
-		light_position.x -= 1.0f * MOVESPEED;
-		break;
+	//case 'i':
+	//	light_position.z += 1.0f * MOVESPEED;
+	//	break;
+	//case 'j':
+	//	light_position.x += 1.0f * MOVESPEED;
+	//	break;				
+	//case 'k':				
+	//	light_position.z -= 1.0f * MOVESPEED;
+	//	break;				
+	//case 'l':				
+	//	light_position.x -= 1.0f * MOVESPEED;
+	//	break;
 
 	/*case 'i':
 		keys &= ~CAM_FORWARD;
