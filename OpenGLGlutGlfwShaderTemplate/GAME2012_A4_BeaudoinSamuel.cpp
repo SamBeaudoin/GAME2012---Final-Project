@@ -94,8 +94,12 @@ GLuint hedgeID;
 GLuint wallID;
 GLuint pickUpID;
 GLuint wallTopID;
+GLuint towerID;
+GLuint roofID;
 
 GLint width, height, bitDepth;
+
+GLUquadricObj* quadObj = gluNewQuadric();
 
 // Light Variables
 glm::vec3 light_position;
@@ -220,6 +224,22 @@ Cube c_WallCrenells1[13] =
 	{2.6f, 0.3f, 0.1f},
 	{2.6f, 0.3f, 0.1f},
 	{2.6f, 0.3f, 0.1f}
+};
+
+Prism p_Towers[4]
+{
+	8,
+	8,
+	8,
+	8
+};
+
+Cone c_towerRoof[4]
+{
+	8,
+	8,
+	8,
+	8
 };
 
 void timer(int); // Prototype.
@@ -357,6 +377,38 @@ void init(void)
 	stbi_image_free(image);
 	// End 6th image.
 
+	// Load 7th image.
+	image = stbi_load("Tower.png", &width, &height, &bitDepth, 0);
+	if (!image) { cout << "Unable to load file!" << endl; }
+	glGenTextures(1, &towerID);
+	glBindTexture(GL_TEXTURE_2D, towerID);
+	// Note: image types with native transparency will need to be GL_RGBA instead of GL_RGB.
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	stbi_image_free(image);
+	// End 7th image.
+
+	// Load 8th image.
+	image = stbi_load("Roof.png", &width, &height, &bitDepth, 0);
+	if (!image) { cout << "Unable to load file!" << endl; }
+	glGenTextures(1, &roofID);
+	glBindTexture(GL_TEXTURE_2D, roofID);
+	// Note: image types with native transparency will need to be GL_RGBA instead of GL_RGB.
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	stbi_image_free(image);
+	// End 8th image.
+
 	glUniform1i(glGetUniformLocation(program, "texture0"), 0);
 
 	// Setting material values.
@@ -409,6 +461,16 @@ void init(void)
 
 	// Pick-up
 	c_PickUp.BufferShape();
+
+	for (int i = 0; i < 4; i++)
+	{
+		p_Towers[i].BufferShape();
+	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		c_towerRoof[i].BufferShape();
+	}
 
 
 	// Enable depth testing and face culling. 
@@ -675,6 +737,39 @@ void display(void)
 
 	transformObject(glm::vec3(0.5f, 0.5f, 0.5), XYZ_AXIS, angle += 1.0f, glm::vec3(15.0f, 4.0f, -29.0f));
 	c_PickUp.DrawShape(GL_TRIANGLES);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// Prism.
+	glBindTexture(GL_TEXTURE_2D, towerID);
+	transformObject(glm::vec3(2.0f, 3.5f, 2.0f), X_AXIS, 0.0f, glm::vec3(4.5f, 5.0f, -10.53f));
+	p_Towers[0].DrawShape(GL_TRIANGLES);
+
+	transformObject(glm::vec3(2.0f, 3.5f, 2.0f), X_AXIS, 0.0f, glm::vec3(43.3f, 5.0f, -10.53f));
+	p_Towers[1].DrawShape(GL_TRIANGLES);
+
+	transformObject(glm::vec3(2.0f, 3.5f, 2.0f), X_AXIS, 0.0f, glm::vec3(43.3f, 5.0f, -40.35f));
+	p_Towers[2].DrawShape(GL_TRIANGLES);
+
+	transformObject(glm::vec3(2.0f, 3.5f, 2.0f), X_AXIS, 0.0f, glm::vec3(4.5f, 5.0f, -40.35f));
+	p_Towers[3].DrawShape(GL_TRIANGLES);
+
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// Cone.
+	glBindTexture(GL_TEXTURE_2D, roofID);
+	transformObject(glm::vec3(3.0f, 4.0f, 3.0f), X_AXIS, 0.0f, glm::vec3(4.0f, 8.5f, -11.0f));
+	c_towerRoof[0].DrawShape(GL_TRIANGLES);
+
+	transformObject(glm::vec3(3.0f, 4.0f, 3.0f), X_AXIS, 0.0f, glm::vec3(43.0f, 8.5f, -11.0f));
+	c_towerRoof[1].DrawShape(GL_TRIANGLES);
+
+	transformObject(glm::vec3(3.0f, 4.0f, 3.0f), X_AXIS, 0.0f, glm::vec3(43.0f, 8.5f, -40.9f));
+	c_towerRoof[2].DrawShape(GL_TRIANGLES);
+
+	transformObject(glm::vec3(3.0f, 4.0f, 3.0f), X_AXIS, 0.0f, glm::vec3(4.0f, 8.5f, -40.9f));
+	c_towerRoof[3].DrawShape(GL_TRIANGLES);
 
 
 	glClearColor(0.63f, 0.89f, 0.72f, 1.0f); // Set Background Color
