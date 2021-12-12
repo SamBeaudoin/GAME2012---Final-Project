@@ -103,13 +103,13 @@ glm::vec3 light_position;
 // Light objects. Now OOP.
 AmbientLight aLight(
 	glm::vec3(1.0f, 1.0f, 1.0f),
-	1.0f);
+	0.5f);
 
 PointLight pLight(
-	glm::vec3(5.0f, 1.0f, -4.0f),	// Position.
-	50.0f,							// Range.
+	glm::vec3(16.5f, 0.0f, -20.0f),	// Position.
+	10.0f,							// Range.
 	1.0f, 4.5f, 75.0f,				// Constant, Linear, Exponent.   
-	glm::vec3(1.0f, 0.56f, 0.64f),	// Diffuse colour.
+	glm::vec3(0.5f, 1.0f, 0.5f),	// Diffuse colour.
 	1.0f);							// Diffuse strength.
 
 Material mat = { 1.0f, 32 }; // Alternate way to construct an object.
@@ -278,13 +278,13 @@ void init(void)
 	// End first image.
 
 	// Load second image.
-	image = stbi_load("Platform_02.png", &width, &height, &bitDepth, 0);
+	image = stbi_load("Platform.jpg", &width, &height, &bitDepth, 0);
 	if (!image) { cout << "Unable to load file!" << endl; }
 	glGenTextures(1, &platformID);
 	glBindTexture(GL_TEXTURE_2D, platformID);
 	// Note: image types with native transparency will need to be GL_RGBA instead of GL_RGB.
-	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

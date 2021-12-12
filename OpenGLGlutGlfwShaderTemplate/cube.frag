@@ -80,6 +80,8 @@ vec4 calcPointLight()
 	return (color / attenuation);
 }
 
+
+
 void main()
 {
 	// Calculate lighting.
