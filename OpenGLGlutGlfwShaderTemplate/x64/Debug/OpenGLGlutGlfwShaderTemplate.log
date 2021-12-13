@@ -1,4 +1,4 @@
-﻿  GAME2012_A4_BeaudoinSamuel.cpp
+﻿  GAME2012_FinalProject.cpp
 D:\School Stuff\Game-F2021\3D Graphics\Final_Project\GAME2012 - Final Project\OpenGLGlutGlfwShaderTemplate\Shape.h(36,23): warning C4267: 'return': conversion from 'size_t' to 'GLsizei', possible loss of data
 D:\School Stuff\Game-F2021\3D Graphics\Final_Project\GAME2012 - Final Project\OpenGLGlutGlfwShaderTemplate\Shape.h(97,21): warning C4018: '<': signed/unsigned mismatch
 D:\School Stuff\Game-F2021\3D Graphics\Final_Project\GAME2012 - Final Project\OpenGLGlutGlfwShaderTemplate\Shape.h(160,1): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
