@@ -96,6 +96,7 @@ GLuint pickUpID;
 GLuint wallTopID;
 GLuint towerID;
 GLuint roofID;
+GLuint gateID;
 
 GLint width, height, bitDepth;
 
@@ -233,6 +234,22 @@ Cube c_WallCrenells1[13] =
 };
 
 Prism p_Towers[4]
+{
+	8,
+	8,
+	8,
+	8
+};
+
+Prism p_GuardTowers[4]
+{
+	8,
+	8,
+	8,
+	8
+};
+
+Cone c_guardTowerRoof[4]
 {
 	8,
 	8,
@@ -444,6 +461,22 @@ void init(void)
 	stbi_image_free(image);
 	// End 8th image.
 
+	// Load 8th image.
+	image = stbi_load("gate.jpg", &width, &height, &bitDepth, 0);
+	if (!image) { cout << "Unable to load file!" << endl; }
+	glGenTextures(1, &gateID);
+	glBindTexture(GL_TEXTURE_2D, gateID);
+	// Note: image types with native transparency will need to be GL_RGBA instead of GL_RGB.
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	stbi_image_free(image);
+	// End 8th image.
+
 	glUniform1i(glGetUniformLocation(program, "texture0"), 0);
 
 	// Setting material values.
@@ -526,6 +559,16 @@ void init(void)
 	for (int i = 0; i < 4; i++)
 	{
 		c_towerRoof[i].BufferShape();
+	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		p_GuardTowers[i].BufferShape();
+	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		c_guardTowerRoof[i].BufferShape();
 	}
 
 
@@ -789,7 +832,7 @@ void display(void)
 	c_GuardHouse[0].DrawShape(GL_TRIANGLES);														
 			
 	glBindTexture(GL_TEXTURE_2D, 0);
-	glBindTexture(GL_TEXTURE_2D, wallID);
+	glBindTexture(GL_TEXTURE_2D, gateID);
 
 	transformObject(c_GuardHouse[1].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(24.5f, 0.0f, -40.1f));	// Gate #1 {1.0f, 2.0f, 0.1f}
 	c_GuardHouse[1].DrawShape(GL_TRIANGLES);														
@@ -811,6 +854,8 @@ void display(void)
 
 	// Guardhouse Trimmings!
 
+	glBindTexture(GL_TEXTURE_2D, towerID);
+
 	transformObject(c_GuardHouseTrimmings[0].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(24.4f, 0.0f, -40.2f)); //{0.1f, 2.0f, 0.2f},	// Outside Left 
 	c_GuardHouseTrimmings[0].DrawShape(GL_TRIANGLES);
 	
@@ -829,6 +874,8 @@ void display(void)
 
 	transformObject(c_GuardHouseTrimmings[5].getCubePoints(), Y_AXIS, 0.0f, glm::vec3(24.4f, 2.75f, -36.0f));//{2.2f, 0.1f, 0.2f},		// Inside Lip
 	c_GuardHouseTrimmings[5].DrawShape(GL_TRIANGLES);
+
+	glBindTexture(GL_TEXTURE_2D, roofID);
 
 	transformObject(c_GuardHouseTrimmings[6].getCubePoints(), X_AXIS, 30.0f, glm::vec3(24.3f, 1.35f, -36.4f));//{0.1f, 0.1f, 1.345f},		// Rail Left
 	c_GuardHouseTrimmings[6].DrawShape(GL_TRIANGLES);
@@ -890,6 +937,38 @@ void display(void)
 
 	transformObject(glm::vec3(3.0f, 4.0f, 3.0f), X_AXIS, 0.0f, glm::vec3(4.0f, 8.5f, -40.9f));
 	c_towerRoof[3].DrawShape(GL_TRIANGLES);
+
+	// Guard house Towers
+	// Prism.
+	glBindTexture(GL_TEXTURE_2D, towerID);
+	transformObject(glm::vec3(2.0f, 8.5f, 2.0f), X_AXIS, 0.0f, glm::vec3(22.0f, 0.0f, -40.5f));
+	p_GuardTowers[0].DrawShape(GL_TRIANGLES);
+
+	transformObject(glm::vec3(2.0f, 8.5f, 2.0f), X_AXIS, 0.0f, glm::vec3(26.0f, 0.0f, -40.5f));
+	p_GuardTowers[1].DrawShape(GL_TRIANGLES);
+
+	transformObject(glm::vec3(1.0f, 5.25f, 1.0f), X_AXIS, 0.0f, glm::vec3(22.5f, 0.0f, -36.5f));
+	p_GuardTowers[2].DrawShape(GL_TRIANGLES);
+
+	transformObject(glm::vec3(1.0f, 5.25f, 1.0f), X_AXIS, 0.0f, glm::vec3(26.5f, 0.0f, -36.5f));
+	p_GuardTowers[3].DrawShape(GL_TRIANGLES);
+
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// Cone.
+	glBindTexture(GL_TEXTURE_2D, roofID);
+	transformObject(glm::vec3(3.0f, 4.0f, 3.0f), X_AXIS, 0.0f, glm::vec3(21.5f, 8.5f, -41.0f));
+	c_guardTowerRoof[0].DrawShape(GL_TRIANGLES);
+
+	transformObject(glm::vec3(3.0f, 4.0f, 3.0f), X_AXIS, 0.0f, glm::vec3(25.5f, 8.5f, -41.0f));
+	c_guardTowerRoof[1].DrawShape(GL_TRIANGLES);
+
+	transformObject(glm::vec3(1.5f, 2.0f, 1.5f), X_AXIS, 0.0f, glm::vec3(22.25f, 5.25f, -36.75f));
+	c_guardTowerRoof[2].DrawShape(GL_TRIANGLES);
+
+	transformObject(glm::vec3(1.5f, 2.0f, 1.5f), X_AXIS, 0.0f, glm::vec3(26.25f, 5.25, -36.75f));
+	c_guardTowerRoof[3].DrawShape(GL_TRIANGLES);
 
 
 	glClearColor(0.63f, 0.89f, 0.72f, 1.0f); // Set Background Color
